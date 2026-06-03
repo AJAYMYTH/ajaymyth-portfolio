@@ -1,0 +1,78 @@
+---
+// About.astro
+import { ScrollReveal } from "./ScrollReveal";
+---
+
+<section id="about" class="py-24 md:py-32 px-6 md:px-12 bg-black border-t border-border relative">
+  <div class="max-w-5xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-10 gap-12 md:gap-16 items-start">
+      <!-- Left Column: Bio Text (60% / 6 columns) -->
+      <div class="md:col-span-6 space-y-6 fade-in-up">
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-xs text-accent-cyan">// 01.</span>
+          <h2 class="text-xs uppercase tracking-widest text-text-muted font-mono font-bold">About Me</h2>
+        </div>
+        
+        <ScrollReveal client:visible size="lg" align="left" variant="primary" textClassName="text-2xl sm:text-3xl font-sans font-bold text-white tracking-tight leading-tight">
+          Building AI systems and high-performance protocols from the ground up.
+        </ScrollReveal>
+
+        <div class="space-y-4 font-sans text-base text-text-secondary leading-relaxed font-normal">
+          <p>
+            I am a student currently pursuing my Diploma in AI &amp; ML at <span class="text-white font-medium">GTTC College Magadi, Karnataka</span>. Unlike typical academic developers, I thrive on building real, production-ready software that solves technical and business problems while mastering my craft.
+          </p>
+          <p>
+            My work spans developing custom application-layer binary protocols (like <span class="text-accent-cyan font-mono text-sm">AfterLink</span>) that outperform WebSockets, building autonomous RAG chatbot pipelines, and automating entire client acquisition workflows using <span class="text-white font-medium">n8n</span> and LLMs.
+          </p>
+          <p>
+            Currently, I am representing my college in the <span class="text-white font-medium">Karnataka State Skill Olympics</span> for AWS Cloud Computing, and actively contributing to open source. I believe in writing surgical, well-tested code and sharing my journey in public.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Column: Quick Info Card (40% / 4 columns) -->
+      <div class="md:col-span-4 fade-in-up transition-transform duration-300 hover:-translate-y-1">
+        <div class="bg-bg-surface border border-border rounded-xl p-6 relative overflow-hidden shadow-2xl">
+          <div class="absolute -right-16 -top-16 w-32 h-32 bg-accent-cyan/5 rounded-full blur-3xl pointer-events-none"></div>
+          
+          <h4 class="font-mono text-xs uppercase tracking-wider text-text-muted mb-6 border-b border-border pb-3">Quick Facts</h4>
+          
+          <ul class="space-y-4 font-mono text-xs text-text-secondary">
+            <li class="flex items-center gap-3">
+              <span class="text-accent-cyan">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </span>
+              <span>Hagaribommnahalli, KA, India</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-accent-cyan">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg>
+              </span>
+              <span>DAIML — GTTC Magadi</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-accent-cyan">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              </span>
+              <span>Open to Collaborations &amp; Internships</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-accent-cyan">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              </span>
+              <span>Available for Projects</span>
+            </li>
+            <li class="flex items-center gap-3 border-t border-border pt-4 mt-2">
+              <span class="text-accent-cyan">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+              </span>
+              <a href="https://orcid.org/0009-0000-4829-6726" target="_blank" rel="noopener noreferrer" class="hover:text-accent-cyan transition-colors underline break-all">
+                ORCID: 0009-0000-4829-6726
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

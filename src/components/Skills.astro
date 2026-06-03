@@ -1,0 +1,214 @@
+---
+// Skills.astro
+import { skillCategories } from "../data/skills";
+
+// Helper function to return high-quality brand-specific SVGs based on skill name
+const getIconSvg = (skillName: string) => {
+  switch (skillName) {
+    case "JavaScript":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-[#f7df1e]"><path d="M0 0h24v24H0V0zm22.034 18.268c-.175-1.095-.888-2.015-3.003-2.87-1.152-.452-1.956-.705-1.956-1.348 0-.438.35-.767.97-.767.796 0 1.307.423 1.482 1.11H22c-.22-2.11-1.555-3.32-3.524-3.32-2.21 0-3.723 1.146-3.723 3.146 0 2.438 1.95 2.868 3.86 3.657 1.3.504 1.97.818 1.97 1.54 0 .526-.482.905-1.27.905-1.168 0-1.81-.59-1.986-1.57h-2.524c.248 2.504 1.803 3.32 4.31 3.32 2.62 0 4.022-1.22 4.022-3.313zm-12.013-.732c-.117-.686-.336-1.138-.89-1.394-.482-.227-.89-.314-1.686-.314-.818 0-1.124.168-1.285.518-.182.4-.182.89-.182 2.146 0 1.234 0 1.73.182 2.11.16.365.518.525 1.343.525.803 0 1.146-.175 1.336-.59.182-.394.182-.876.182-2.146V15h2.526v5.35c0 1.547-.073 2.21-.306 2.868-.416 1.182-1.46 1.782-3.664 1.782-1.832 0-3.153-.54-3.693-1.43-.277-.46-.38-1.073-.41-2.277h2.526c.036.708.146.992.38 1.204.314.285.876.386 1.408.386.868 0 1.292-.24 1.482-.876.102-.343.117-.898.117-2.036V17.536z"/></svg>`;
+    case "TypeScript":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-[#3178c6]"><path d="M0 0h24v24H0V0zm10.567 17.53c0 .876-.11 1.43-.336 1.78-.41.657-1.277.92-2.525.92-1.78 0-2.876-.576-3.27-1.48-.19-.44-.24-1.023-.24-2.278h2.373c.015.65.11 1.015.285 1.198.24.256.686.35 1.117.35.657 0 1.008-.182 1.168-.584.095-.24.11-.635.11-1.547V8h2.525v9.53zm9.052-4.043c-.153-.94-.78-1.737-2.62-2.474-1.008-.4-1.708-.62-1.708-1.182 0-.387.307-.67.854-.67.7 0 1.146.365 1.3 1.01h2.2v-.22c-.2-1.847-1.358-2.9-3.08-2.9-1.927 0-3.255 1.007-3.255 2.76 0 2.13 1.7 2.503 3.372 3.197 1.138.44 1.722.715 1.722 1.343 0 .46-.423.79-1.11.79-1.022 0-1.584-.518-1.737-1.372h-2.2c.21 2.182 1.57 2.9 3.77 2.9 2.292 0 3.518-1.066 3.518-2.9z"/></svg>`;
+    case "React":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" class="text-[#61dafb]"><ellipse cx="12" cy="12" rx="11" ry="4.2" /><ellipse cx="12" cy="12" rx="11" ry="4.2" transform="rotate(60 12 12)" /><ellipse cx="12" cy="12" rx="11" ry="4.2" transform="rotate(120 12 12)" /><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>`;
+    case "Node.js":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-[#339933]"><path d="M12 .008L1.642 6v11.984L12 23.992l10.358-6.008V6.008L12 .008zm8.358 16.79l-8.358 4.846-8.358-4.846V7.194l8.358-4.846 8.358 4.846v9.604z"/></svg>`;
+    case "Python":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-[#3776ab]"><path d="M11.927 0C5.352 0 5.568 2.857 5.568 2.857L5.586 5.86H12.01V6.7H3.04S0 6.643 0 12.036c0 5.393 2.65 5.228 2.65 5.228h1.587v-2.224s-.044-2.658 2.613-2.658h5.056c2.658 0 2.502-2.316 2.502-2.316V4.18s.117-4.18-2.482-4.18zm-3.48 1.954a.735.735 0 1 1 0 1.47a.735.735 0 0 1 0-1.47zm8.441 3.513c-2.658 0-2.502 2.316-2.502 2.316v5.856s-.117 4.18 2.482 4.18c6.575 0 6.359-2.857 6.359-2.857l-.018-3.003H16.8v-.84h8.97S24 11.236 24 5.843c0-5.393-2.65-5.228-2.65-5.228h-1.587v2.224s.044 2.658-2.613 2.658h-5.056zm3.48 16.579a.735.735 0 1 1 0-1.47a.735.735 0 0 1 0 1.47z"/></svg>`;
+    case "HTML/CSS":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#e34f26]"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>`;
+    case "Vite":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-[#646cff]"><path d="M22.414 3.062a1 1 0 0 0-.756-.913L12 .4 2.342 2.149a1 1 0 0 0-.756.913L1.042 12.3a1 1 0 0 0 .47.886l9.958 5.753V23a1 1 0 0 0 2 0v-4.061l9.958-5.753a1 1 0 0 0 .47-.886l-.484-9.238zm-11.456 12.6l-6.3-3.642 10.37-3.805-4.07 7.447z"/></svg>`;
+    case "Astro.js":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#ff5a00]"><path d="M12 2L2 22h20L12 2z" /><path d="M12 18v-8M9 14l3-3 3 3" /></svg>`;
+    case "Express.js":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/80"><rect x="2" y="2" width="20" height="8" rx="2" /><rect x="2" y="14" width="20" height="8" rx="2" /><line x1="6" y1="6" x2="6" y2="6" /><line x1="6" y1="18" x2="6" y2="18" /></svg>`;
+    case "Tailwind CSS":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-[#06b6d4]"><path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C7.666 17.818 9.027 19 12.001 19c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z"/></svg>`;
+    case "Socket.IO":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" /></svg>`;
+    case "Claude API":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-[#d97706]"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>`;
+    case "OpenRouter":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3b82f6]"><circle cx="12" cy="12" r="3" /><circle cx="12" cy="5" r="3" /><circle cx="5" cy="12" r="3" /><circle cx="19" cy="12" r="3" /><circle cx="12" cy="19" r="3" /></svg>`;
+    case "RAG Pipelines":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#a855f7]"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>`;
+    case "pgvector":
+    case "Supabase Vector":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3ecf8e]"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" /><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" /><path d="M12 2v6" /></svg>`;
+    case "AWS":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-[#ff9900]"><path d="M13.2 16.3c-1.6.4-3.4.6-5.1.6-3.2 0-6.1-1.3-7.5-3.6-.3-.5-.1-.8.4-.7 1.8.3 3.9.4 5.9.4 1.7 0 3.3-.1 5-.4.5-.1.8.3.3.7M21.9 14.8c-.3.4-1.2.6-1.7.6-.4.1-.5-.2-.2-.5.8-.8 1.4-2 1.4-3.4 0-3.3-2.6-6-5.8-6s-5.8 2.7-5.8 6c0 1.9.9 3.6 2.3 4.7.3.2.3.5-.1.7-1.7-1.1-2.7-3.1-2.7-5.4 0-3.9 3.2-7.1 7.1-7.1s7.1 3.2 7.1 7.1c-.1 1.7-.8 3.1-1.6 4M14.8 19.3c.3-.1.4.2.2.4-.7.6-1.5 1-2.4 1.2-.5.1-.6-.2-.3-.4.8-.4 1.7-.8 2.5-1.2"/></svg>`;
+    case "Vercel":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-white"><path d="M24 22.525H0L12 1.732l12 20.793z"/></svg>`;
+    case "Google Cloud":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-[#4285f4]"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>`;
+    case "n8n":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#ff6d5a]"><circle cx="12" cy="12" r="3" /><circle cx="6" cy="6" r="3" /><circle cx="18" cy="18" r="3" /><line x1="8.12" y1="8.12" x2="9.88" y2="9.88" /><line x1="14.12" y1="14.12" x2="15.88" y2="15.88" /></svg>`;
+    case "GitHub Actions":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#2088ff]"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>`;
+    case "Supabase":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-[#3ecf8e]"><path d="M21.362 9.354H13.72V1.638A1.637 1.637 0 0 0 11.025.597L2.096 11.233a1.638 1.638 0 0 0 1.242 2.68H10.98v8.444a1.638 1.638 0 0 0 2.808 1.135l9.025-11.385a1.638 1.638 0 0 0-1.451-2.753z"/></svg>`;
+    case "PostgreSQL":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#336791]"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" /><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" /></svg>`;
+    case "Google Drive API":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#34a853]"><rect x="3" y="3" width="18" height="18" rx="2" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="9" y1="21" x2="9" y2="9" /></svg>`;
+    case "Google Sheets API":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#0f9d58]"><rect x="3" y="3" width="18" height="18" rx="2" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="3" y1="15" x2="21" y2="15" /><line x1="12" y1="3" x2="12" y2="21" /></svg>`;
+    case "TCP/IP":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#00d8ff]"><rect x="16" y="16" width="6" height="6" rx="1" /><rect x="2" y="16" width="6" height="6" rx="1" /><rect x="9" y="2" width="6" height="6" rx="1" /><path d="M12 8v8M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3" /></svg>`;
+    case "AfterLink Binary Protocol":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#00d8ff]"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 11 11 13 15 9" /></svg>`;
+    case "WebSocket":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#ec4899]"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>`;
+    case "HTTP/REST":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#00d8ff]"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>`;
+    case "JWT":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#e02424]"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>`;
+    case "TLS":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#10b981]"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>`;
+    case "Git":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-[#f05032]"><path d="M23.546 10.93L13.067.452a1.644 1.644 0 0 0-2.327 0L8.76 2.43l3.182 3.182a1.637 1.637 0 0 1 2.257 2.257l3.075 3.075a1.645 1.645 0 0 1-.031 2.291l-3.28 3.28a1.644 1.644 0 0 1-2.29.031l-3.075-3.075a1.637 1.637 0 0 1-2.257-2.257l-3.18-3.18L.452 13.066a1.644 1.644 0 0 0 0 2.327l10.479 10.479a1.644 1.644 0 0 0 2.327 0l10.288-10.288a1.644 1.644 0 0 0 0-2.654zM9 12a1 1 0 1 1-1-1 1 1 0 0 1 1 1zm8.7 3.7a1 1 0 1 1-1-1 1 1 0 0 1 1 1z"/></svg>`;
+    case "GitHub":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-white"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>`;
+    case "VS Code":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-[#007acc]"><path d="M23.15 2.587L18.21.105a1.478 1.478 0 0 0-1.7.255L11.9 4.17 3.658.263a1.071 1.071 0 0 0-1.422.48L.105 5.4a1.07 1.07 0 0 0 .446 1.378l4.475 2.4-4.475 2.4a1.07 1.07 0 0 0-.446 1.378l2.13 4.658a1.07 1.07 0 0 0 1.422.48l8.243-3.907 4.607 3.81a1.478 1.478 0 0 0 1.7.255l4.94-2.482A1.478 1.478 0 0 0 24 16.9V4.67a1.478 1.478 0 0 0-.85-1.383z"/></svg>`;
+    case "Postman":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#ff6c37]"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>`;
+    case "Figma (basic)":
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="text-[#f24e1e]"><path d="M8 24a5 5 0 0 1-5-5 5 5 0 0 1 5-5h5v5a5 5 0 0 1-5 5zm0-10a5 5 0 0 1-5-5 5 5 0 0 1 5-5h5v10H8zm5-10a5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5h-5V4zm0 10a5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5h-5v-5zm0 10a5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5h-5v-5z"/></svg>`;
+    default:
+      return `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-text-secondary"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M9 17V7l7 5-7 5z" /></svg>`;
+  }
+};
+
+// Row 1 Skills
+const row1Skills = [
+  ...skillCategories[0].skills, // Languages & Runtime
+  ...skillCategories[1].skills  // Frameworks & Libraries
+];
+
+// Row 2 Skills
+const row2Skills = [
+  ...skillCategories[2].skills, // AI / ML
+  ...skillCategories[3].skills, // Cloud & DevOps
+  ...skillCategories[4].skills  // Databases & Storage
+];
+
+// Row 3 Skills
+const row3Skills = [
+  ...skillCategories[5].skills, // Protocols & Networking
+  ...skillCategories[6].skills  // Tools
+];
+---
+
+<section id="skills" class="py-24 md:py-32 px-6 md:px-12 bg-black border-t border-border overflow-hidden">
+  <div class="max-w-5xl mx-auto space-y-12">
+    <!-- Header -->
+    <div class="fade-in-up flex items-center gap-2">
+      <span class="font-mono text-xs text-text-muted">// 02.</span>
+      <h2 class="text-xs uppercase tracking-widest text-text-muted font-mono font-bold">Skills &amp; Toolkit</h2>
+    </div>
+
+    <!-- Intro Text -->
+    <div class="fade-in-up max-w-2xl">
+      <h3 class="text-2xl sm:text-3xl font-sans font-bold text-white tracking-tight leading-tight mb-4">
+        A Compiled Stack of Modern Engineering
+      </h3>
+      <p class="font-sans text-sm text-text-secondary leading-relaxed font-normal">
+        Continuous scrolling ribbons displaying languages, developer tools, custom protocols, database engines, and AI workflow automation integrations.
+      </p>
+    </div>
+
+    <!-- Scrolling Marquees Grid -->
+    <div class="fade-in-up pt-8 space-y-8 relative">
+      
+      <!-- Row 1: Slides Left -->
+      <div class="relative flex overflow-hidden select-none w-full gap-0 mask-fade">
+        <div class="flex gap-6 min-w-full shrink-0 items-center justify-start pr-6 animate-marquee hover:[animation-play-state:paused] cursor-pointer">
+          {row1Skills.map((skill) => (
+            <div class="inline-flex items-center gap-3.5 px-6 py-3.5 bg-bg-surface border border-border hover:border-border-hover rounded-2xl select-none transition-colors duration-200">
+              <span set:html={getIconSvg(skill.name)}></span>
+              <span class="font-sans text-sm md:text-base font-bold text-white tracking-tight">{skill.name}</span>
+            </div>
+          ))}
+        </div>
+        <div class="flex gap-6 min-w-full shrink-0 items-center justify-start pr-6 animate-marquee hover:[animation-play-state:paused] cursor-pointer" aria-hidden="true">
+          {row1Skills.map((skill) => (
+            <div class="inline-flex items-center gap-3.5 px-6 py-3.5 bg-bg-surface border border-border hover:border-border-hover rounded-2xl select-none transition-colors duration-200">
+              <span set:html={getIconSvg(skill.name)}></span>
+              <span class="font-sans text-sm md:text-base font-bold text-white tracking-tight">{skill.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Row 2: Slides Right (Reversed) -->
+      <div class="relative flex overflow-hidden select-none w-full gap-0 mask-fade">
+        <div class="flex gap-6 min-w-full shrink-0 items-center justify-start pr-6 animate-marquee-reverse hover:[animation-play-state:paused] cursor-pointer">
+          {row2Skills.map((skill) => (
+            <div class="inline-flex items-center gap-3.5 px-6 py-3.5 bg-bg-surface border border-border hover:border-border-hover rounded-2xl select-none transition-colors duration-200">
+              <span set:html={getIconSvg(skill.name)}></span>
+              <span class="font-sans text-sm md:text-base font-bold text-white tracking-tight">{skill.name}</span>
+            </div>
+          ))}
+        </div>
+        <div class="flex gap-6 min-w-full shrink-0 items-center justify-start pr-6 animate-marquee-reverse hover:[animation-play-state:paused] cursor-pointer" aria-hidden="true">
+          {row2Skills.map((skill) => (
+            <div class="inline-flex items-center gap-3.5 px-6 py-3.5 bg-bg-surface border border-border hover:border-border-hover rounded-2xl select-none transition-colors duration-200">
+              <span set:html={getIconSvg(skill.name)}></span>
+              <span class="font-sans text-sm md:text-base font-bold text-white tracking-tight">{skill.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Row 3: Slides Left -->
+      <div class="relative flex overflow-hidden select-none w-full gap-0 mask-fade">
+        <div class="flex gap-6 min-w-full shrink-0 items-center justify-start pr-6 animate-marquee hover:[animation-play-state:paused] cursor-pointer">
+          {row3Skills.map((skill) => (
+            <div class="inline-flex items-center gap-3.5 px-6 py-3.5 bg-bg-surface border border-border hover:border-border-hover rounded-2xl select-none transition-colors duration-200">
+              <span set:html={getIconSvg(skill.name)}></span>
+              <span class="font-sans text-sm md:text-base font-bold text-white tracking-tight">{skill.name}</span>
+            </div>
+          ))}
+        </div>
+        <div class="flex gap-6 min-w-full shrink-0 items-center justify-start pr-6 animate-marquee hover:[animation-play-state:paused] cursor-pointer" aria-hidden="true">
+          {row3Skills.map((skill) => (
+            <div class="inline-flex items-center gap-3.5 px-6 py-3.5 bg-bg-surface border border-border hover:border-border-hover rounded-2xl select-none transition-colors duration-200">
+              <span set:html={getIconSvg(skill.name)}></span>
+              <span class="font-sans text-sm md:text-base font-bold text-white tracking-tight">{skill.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Infinite Marquee Keyframes */
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
+
+  @keyframes marquee-reverse {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(0); }
+  }
+
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+
+  .animate-marquee-reverse {
+    animation: marquee-reverse 30s linear infinite;
+  }
+
+  /* Fade mask overlays for edges */
+  .mask-fade {
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  }
+</style>

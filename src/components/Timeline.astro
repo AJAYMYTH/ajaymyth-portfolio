@@ -1,0 +1,119 @@
+---
+// Timeline.astro
+
+interface TimelineEntry {
+  year: string;
+  title: string;
+  org: string;
+  description: string;
+}
+
+const entries: TimelineEntry[] = [
+  {
+    year: "2024 – Present",
+    title: "Diploma in AI & ML",
+    org: "GTTC College Magadi, Karnataka",
+    description: "Pursuing specialized curriculum in Artificial Intelligence and Machine Learning. Competitor in Karnataka State Skill Olympics for AWS Cloud Computing."
+  },
+  {
+    year: "2025",
+    title: "AfterLink",
+    org: "Open Source Protocol",
+    description: "Published custom binary protocol afterlink to npm registry, built high-performance server/client packages, and authored complete documentation using Astro.js and Vercel."
+  },
+  {
+    year: "2014 – 2023",
+    title: "Primary & High School Education",
+    org: "Rashtrotthana Vidya Kendra - Hagaribomannahalli",
+    description: "Completed primary and high school education, building a strong academic base and fostering an early passion for science and mathematics."
+  }
+];
+---
+
+<section id="experience" class="py-24 md:py-32 px-6 md:px-12 bg-black border-t border-border relative">
+  <div class="max-w-5xl mx-auto">
+    <!-- Header -->
+    <div class="fade-in-up flex items-center gap-2 mb-16">
+      <span class="font-mono text-xs text-text-muted">// 03.</span>
+      <h2 class="text-xs uppercase tracking-widest text-text-muted font-mono font-bold">Experience &amp; Education</h2>
+    </div>
+
+    <!-- Timeline Container -->
+    <div class="relative w-full select-none">
+      <!-- Vertical Center Line -->
+      <div class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-px bg-border"></div>
+
+      <!-- Entries -->
+      <div class="space-y-12 md:space-y-0">
+        {entries.map((entry, index) => {
+          const isEven = index % 2 === 0;
+          return (
+            <div class="relative flex flex-col md:flex-row w-full justify-between items-start md:items-stretch min-h-[120px] md:mb-12 last:mb-0">
+              
+              <!-- Timeline Dot -->
+              <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 top-2 md:top-6 w-3 h-3 bg-black border-2 border-accent-cyan rounded-full shadow-[0_0_12px_rgba(0,216,255,0.7)] z-10"></div>
+              
+              {isEven ? (
+                <>
+                  <!-- Left side: Content -->
+                  <div class="w-full md:w-[45%] ml-10 md:ml-0 md:py-4 md:pr-12 md:text-right">
+                    <!-- Year Badge -->
+                    <span class="inline-block font-mono text-[10px] uppercase tracking-wider text-accent-cyan px-2 py-0.5 bg-accent-cyan/10 border border-accent-cyan/20 rounded-md mb-2">
+                      {entry.year}
+                    </span>
+
+                    <!-- Title & Org -->
+                    <div class="mb-2">
+                      <h3 class="font-sans text-base sm:text-lg font-bold text-white tracking-tight">
+                        {entry.title}
+                      </h3>
+                      <span class="font-mono text-xs text-text-secondary">
+                        {entry.org}
+                      </span>
+                    </div>
+
+                    <!-- Description -->
+                    <p class="font-sans text-xs sm:text-sm text-text-secondary leading-relaxed font-normal">
+                      {entry.description}
+                    </p>
+                  </div>
+                  
+                  <!-- Right side: Spacer -->
+                  <div class="hidden md:block w-[45%]"></div>
+                </>
+              ) : (
+                <>
+                  <!-- Left side: Spacer -->
+                  <div class="hidden md:block w-[45%]"></div>
+                  
+                  <!-- Right side: Content -->
+                  <div class="w-full md:w-[45%] ml-10 md:ml-0 md:py-4 md:pl-12 md:text-left">
+                    <!-- Year Badge -->
+                    <span class="inline-block font-mono text-[10px] uppercase tracking-wider text-accent-cyan px-2 py-0.5 bg-accent-cyan/10 border border-accent-cyan/20 rounded-md mb-2">
+                      {entry.year}
+                    </span>
+
+                    <!-- Title & Org -->
+                    <div class="mb-2">
+                      <h3 class="font-sans text-base sm:text-lg font-bold text-white tracking-tight">
+                        {entry.title}
+                      </h3>
+                      <span class="font-mono text-xs text-text-secondary">
+                        {entry.org}
+                      </span>
+                    </div>
+
+                    <!-- Description -->
+                    <p class="font-sans text-xs sm:text-sm text-text-secondary leading-relaxed font-normal">
+                      {entry.description}
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</section>

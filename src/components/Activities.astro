@@ -1,0 +1,81 @@
+---
+// Activities.astro
+
+interface Activity {
+  icon: string;
+  title: string;
+  note: string;
+}
+
+const activities: Activity[] = [
+  {
+    icon: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#ff9900]"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" /><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" /><path d="M4 22h16" /><path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34" /><path d="M12 2a6 6 0 0 1 6 6v4a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8a6 6 0 0 1 6-6z" /></svg>`,
+    title: "Karnataka Skill Olympics",
+    note: "AWS Cloud Computing — State level competitor representing GTTC."
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#3ecf8e]"><polyline points="16.5 9.4 7.5 4.21" /><polygon points="12 22.08 12 12 3 6.92 3 17.16 12 22.08" /><polygon points="12 22.08 21 17.16 21 6.92 12 12 12 22.08" /><polygon points="12 12 21 6.92 12 2 3 6.92 12 12" /></svg>`,
+    title: "Open Source",
+    note: "Creator of AfterLink protocol published on npm with full documentation."
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#a855f7]"><circle cx="12" cy="12" r="10" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /><path d="M2 12h20" /></svg>`,
+    title: "Research Interest",
+    note: "Exploring AI-enabled radar scheduling in the SSA/ISRO domain."
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#ff0080]"><line x1="6" y1="12" x2="10" y2="12" /><line x1="8" y1="10" x2="8" y2="14" /><line x1="15" y1="13" x2="15.01" y2="13" /><line x1="18" y1="11" x2="18.01" y2="11" /><rect x="2" y="6" width="20" height="12" rx="3" /></svg>`,
+    title: "AJAY GAMING IK",
+    note: "Kannada-language PC & mobile gaming content channel."
+  }
+];
+---
+
+<section id="activities" class="py-24 md:py-32 px-6 md:px-12 bg-black border-t border-border">
+  <div class="max-w-5xl mx-auto">
+    <!-- Header -->
+    <div class="fade-in-up flex items-center gap-2 mb-12">
+      <span class="font-mono text-xs text-text-muted">// 04.</span>
+      <h2 class="text-xs uppercase tracking-widest text-text-muted font-mono font-bold">Activities &amp; Interests</h2>
+    </div>
+
+    <!-- Cards Layout: Horizontal Scroll on Mobile, 3-column Grid on Desktop -->
+    <div class="fade-in-up flex overflow-x-auto md:grid md:grid-cols-3 gap-6 pb-6 md:pb-0 scrollbar-thin select-none snap-x snap-mandatory">
+      {activities.map((act) => (
+        <div class="flex-shrink-0 w-80 md:w-auto snap-center bg-bg-surface border border-border hover:border-border-hover hover:-translate-y-1 rounded-xl p-6 transition-all duration-200 shadow-sm flex flex-col justify-between">
+          <div class="space-y-4">
+            <!-- Icon Bubble -->
+            <div class="w-10 h-10 rounded-lg bg-bg-elevated border border-border flex items-center justify-center shadow-inner">
+              <Fragment set:html={act.icon} />
+            </div>
+            
+            <h3 class="font-sans text-base font-bold text-white tracking-tight">
+              {act.title}
+            </h3>
+          </div>
+          
+          <p class="font-sans text-xs sm:text-sm text-text-secondary leading-relaxed mt-4 font-normal">
+            {act.note}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Customize styling for horizontal overflow scrollbar on mobile */
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #000000;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #1f1f1f;
+    border-radius: 3px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #333333;
+  }
+</style>

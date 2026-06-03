@@ -1,0 +1,50 @@
+---
+// Footer.astro
+import { LoopingWords } from "./LoopingWords";
+
+const footerWords = [
+  "I'm Ajay",
+  "Developer",
+  "AfterLink Creator",
+  "AIML Student",
+  "Open Source Builder",
+  "AWS Competitor"
+];
+---
+
+<footer class="py-16 px-6 md:px-12 bg-black border-t border-border select-none">
+  <div class="max-w-5xl mx-auto space-y-12">
+    <!-- Looping Words signature sign-off -->
+    <div class="flex justify-center border-b border-border/30 pb-12">
+      <LoopingWords client:visible words={footerWords} />
+    </div>
+
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 pt-4">
+      <!-- Brand / Copy with Profile Photo -->
+      <div class="flex items-center gap-4">
+        <img 
+          src="/profile-photo.jpeg" 
+          alt="Javali Ajayakumar" 
+          class="w-12 h-12 rounded-full border border-border object-cover select-none pointer-events-none" 
+          loading="lazy"
+        />
+        <div class="space-y-1">
+          <span class="font-mono text-base font-bold text-white tracking-wide block">
+            AJAYMYTH
+          </span>
+          <p class="font-sans text-xs text-text-secondary">
+            &copy; 2026 Javali Ajayakumar. All rights reserved. Licensed under MIT.
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick social links -->
+      <div class="flex items-center gap-6 font-mono text-xs text-text-secondary">
+        <a href="https://github.com/AJAYMYTH" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">GitHub</a>
+        <a href="https://www.npmjs.com/package/afterlink" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">npm</a>
+        <a href="https://orcid.org/0009-0000-4829-6726" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">ORCID</a>
+        <a href="https://www.linkedin.com/in/javaliajayakumar" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</footer>

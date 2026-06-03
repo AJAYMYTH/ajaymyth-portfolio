@@ -1,0 +1,48 @@
+---
+// ProjectCard.astro
+import type { Project } from "../../data/projects";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<a 
+  href={project.github || "#"} 
+  target="_blank" 
+  rel="noopener noreferrer" 
+  class="group flex flex-col justify-between h-full bg-bg-surface border border-border hover:border-border-hover hover:-translate-y-1 rounded-xl p-6 transition-all duration-200 select-none shadow-sm hover:shadow-md"
+>
+  <div>
+    <!-- Top Row -->
+    <div class="flex items-center justify-between mb-4">
+      <span class="px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider bg-white/5 border border-white/10 rounded text-text-secondary">
+        {project.tag}
+      </span>
+      <span class="text-text-muted group-hover:text-white transition-colors duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+      </span>
+    </div>
+
+    <!-- Project Name -->
+    <h4 class="font-sans text-base sm:text-lg font-bold text-white tracking-tight mb-2 group-hover:text-accent-cyan transition-colors duration-200">
+      {project.name}
+    </h4>
+
+    <!-- Description -->
+    <p class="font-sans text-xs sm:text-sm text-text-secondary leading-relaxed mb-6 font-normal">
+      {project.description}
+    </p>
+  </div>
+
+  <!-- Tech Stack -->
+  <div class="flex flex-wrap gap-1.5 pt-4 border-t border-border/50">
+    {project.stack.map(tech => (
+      <span class="px-2 py-0.5 bg-bg-elevated text-text-muted rounded text-[10px] font-mono">
+        {tech}
+      </span>
+    ))}
+  </div>
+</a>

@@ -1,0 +1,99 @@
+---
+import "../styles/global.css";
+import { SparkleCursor } from "../components/SparkleCursor";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Javali Ajayakumar — AIML Developer",
+  description = "AIML developer and AI app builder from Karnataka, India. Creator of AfterLink — a high-performance binary TCP protocol for Node.js."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth bg-black text-white">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="AJAYMYTH" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ajaymyth.vercel.app/" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://ajaymyth.vercel.app/" />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="/og-image.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-bg-base text-text-primary selection:bg-text-primary selection:text-bg-base">
+    <SparkleCursor client:load />
+    <slot />
+
+    <!-- Scroll Reveal and Navigation Blur Script -->
+    <script>
+      const initAnimations = () => {
+        // IntersectionObserver for fade-in-up animations
+        const revealCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target); // Trigger only once
+            }
+          });
+        };
+
+        const observer = new IntersectionObserver(revealCallback, {
+          threshold: 0.05,
+          rootMargin: "0px 0px -60px 0px",
+        });
+
+        document.querySelectorAll(".fade-in-up").forEach((el) => {
+          observer.observe(el);
+        });
+
+        // Navbar blur toggle on scroll
+        const navbar = document.getElementById("navbar");
+        if (navbar) {
+          const handleScroll = () => {
+            if (window.scrollY > 20) {
+              navbar.classList.add("bg-black/70", "backdrop-blur-md", "border-b", "border-border");
+            } else {
+              navbar.classList.remove("bg-black/70", "backdrop-blur-md", "border-b", "border-border");
+            }
+          };
+
+          window.addEventListener("scroll", handleScroll, { passive: true });
+          handleScroll(); // Initial check
+        }
+      };
+
+      // Run on DOM Content Loaded and after swap if using View Transitions (Astro)
+      document.addEventListener("DOMContentLoaded", initAnimations);
+    </script>
+  </body>
+</html>

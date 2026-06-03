@@ -1,0 +1,92 @@
+---
+// Nav.astro
+---
+
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out py-4 px-6 md:px-12">
+  <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" class="font-mono text-lg font-bold text-white hover:text-accent-cyan transition-colors duration-200">
+      AJAYMYTH
+    </a>
+
+    <!-- Desktop Navigation -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#about" class="text-sm font-sans text-text-secondary hover:text-white transition-colors duration-200">About</a>
+      <a href="#projects" class="text-sm font-sans text-text-secondary hover:text-white transition-colors duration-200">Projects</a>
+      <a href="#skills" class="text-sm font-sans text-text-secondary hover:text-white transition-colors duration-200">Skills</a>
+      <a href="#experience" class="text-sm font-sans text-text-secondary hover:text-white transition-colors duration-200">Experience</a>
+      <a href="#contact" class="text-sm font-sans text-text-secondary hover:text-white transition-colors duration-200">Contact</a>
+      <a href="https://github.com/AJAYMYTH" target="_blank" rel="noopener noreferrer" class="text-sm font-sans font-medium text-accent-cyan hover:underline flex items-center gap-1">
+        GitHub
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+      </a>
+    </div>
+
+    <!-- Mobile Hamburger Toggle -->
+    <button id="mobile-menu-toggle" aria-label="Toggle menu" class="md:hidden text-text-secondary hover:text-white focus:outline-none z-50">
+      <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+      <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu Overlay (Moved outside <nav> to avoid backdrop-filter z-index/height containment bug) -->
+<div id="mobile-menu" class="fixed inset-0 bg-black/95 flex-col items-center justify-center gap-8 text-xl z-50 hidden opacity-0 transition-opacity duration-300">
+  <a href="#about" class="mobile-nav-link text-text-secondary hover:text-white transition-colors duration-200">About</a>
+  <a href="#projects" class="mobile-nav-link text-text-secondary hover:text-white transition-colors duration-200">Projects</a>
+  <a href="#skills" class="mobile-nav-link text-text-secondary hover:text-white transition-colors duration-200">Skills</a>
+  <a href="#experience" class="mobile-nav-link text-text-secondary hover:text-white transition-colors duration-200">Experience</a>
+  <a href="#contact" class="mobile-nav-link text-text-secondary hover:text-white transition-colors duration-200">Contact</a>
+  <a href="https://github.com/AJAYMYTH" target="_blank" rel="noopener noreferrer" class="mobile-nav-link text-accent-cyan hover:underline flex items-center gap-1">
+    GitHub ↗
+  </a>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const hamburgerIcon = document.getElementById('hamburger-icon');
+  const closeIcon = document.getElementById('close-icon');
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+  const toggleMenu = () => {
+    const isHidden = mobileMenu?.classList.contains('hidden');
+    if (isHidden) {
+      // Open
+      mobileMenu?.classList.remove('hidden');
+      setTimeout(() => {
+        mobileMenu?.classList.remove('opacity-0');
+        mobileMenu?.classList.add('flex', 'opacity-100');
+      }, 10);
+      hamburgerIcon?.classList.add('hidden');
+      closeIcon?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Close
+      mobileMenu?.classList.remove('opacity-100');
+      mobileMenu?.classList.add('opacity-0');
+      setTimeout(() => {
+        mobileMenu?.classList.remove('flex');
+        mobileMenu?.classList.add('hidden');
+      }, 300);
+      hamburgerIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+  };
+
+  toggleBtn?.addEventListener('click', toggleMenu);
+
+  mobileNavLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      // Close menu on link click
+      if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        toggleMenu();
+      }
+    });
+  });
+</script>
