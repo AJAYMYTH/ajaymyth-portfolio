@@ -15,10 +15,19 @@ export const StatCounter: React.FC<Props> = ({ end, suffix, label, decimals = 0 
   useEffect(() => {
     const duration = 1500; // 1.5 seconds
     let startTime: number | null = null;
+    let pausedTime = 0;
+    let lastActiveTime = performance.now();
 
     const animate = (timestamp: number) => {
+      if (document.hidden) {
+        pausedTime += performance.now() - lastActiveTime;
+        lastActiveTime = performance.now();
+        requestAnimationFrame(animate);
+        return;
+      }
+      lastActiveTime = performance.now();
       if (!startTime) startTime = timestamp;
-      const progress = timestamp - startTime;
+      const progress = timestamp - startTime - pausedTime;
       const percentage = Math.min(progress / duration, 1);
       
       // Ease out quad formula: f(t) = t * (2 - t)

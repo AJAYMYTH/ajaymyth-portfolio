@@ -1,6 +1,8 @@
 ---
 // Footer.astro
 import { LoopingWords } from "./LoopingWords";
+import { Image } from "astro:assets";
+import profilePhoto from "../assets/profile-photo.jpeg";
 
 const footerWords = [
   "I'm Ajay",
@@ -16,15 +18,17 @@ const footerWords = [
   <div class="max-w-5xl mx-auto space-y-12">
     <!-- Looping Words signature sign-off -->
     <div class="flex justify-center border-b border-border/30 pb-12">
-      <LoopingWords client:visible words={footerWords} />
+      <LoopingWords client:load words={footerWords} />
     </div>
 
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 pt-4">
       <!-- Brand / Copy with Profile Photo -->
       <div class="flex items-center gap-4">
-        <img 
-          src="/profile-photo.jpeg" 
+        <Image 
+          src={profilePhoto} 
           alt="Javali Ajayakumar" 
+          width={48}
+          height={48}
           class="w-12 h-12 rounded-full border border-border object-cover select-none pointer-events-none" 
           loading="lazy"
         />

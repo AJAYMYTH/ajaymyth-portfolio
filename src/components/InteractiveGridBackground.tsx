@@ -64,32 +64,38 @@ export const InteractiveGridBackground: React.FC<InteractiveGridBackgroundProps>
 
   // Mouse tracking
   useEffect(() => {
+    let ticking = false;
     const handleMouseMove = (e: MouseEvent) => {
-      const container = containerRef.current;
-      if (!container) return;
-      const rect = container.getBoundingClientRect();
-      const rawX = e.clientX - rect.left;
-      const rawY = e.clientY - rect.top;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        const container = containerRef.current;
+        if (!container) return;
+        const rect = container.getBoundingClientRect();
+        const rawX = e.clientX - rect.left;
+        const rawY = e.clientY - rect.top;
 
-      if (rawX < 0 || rawY < 0 || rawX > rect.width || rawY > rect.height)
-        return;
+        if (rawX < 0 || rawY < 0 || rawX > rect.width || rawY > rect.height)
+          return;
 
-      mouseActiveRef.current = true;
-      lastMouseTimeRef.current = Date.now();
+        mouseActiveRef.current = true;
+        lastMouseTimeRef.current = Date.now();
 
-      const snappedX = Math.floor(rawX / gridSize);
-      const snappedY = Math.floor(rawY / gridSize);
+        const snappedX = Math.floor(rawX / gridSize);
+        const snappedY = Math.floor(rawY / gridSize);
 
-      const last = trailRef.current[0];
-      if (!last || last.x !== snappedX || last.y !== snappedY) {
-        trailRef.current.unshift({ x: snappedX, y: snappedY });
-        if (trailRef.current.length > trailLength) trailRef.current.pop();
-      }
+        const last = trailRef.current[0];
+        if (!last || last.x !== snappedX || last.y !== snappedY) {
+          trailRef.current.unshift({ x: snappedX, y: snappedY });
+          if (trailRef.current.length > trailLength) trailRef.current.pop();
+        }
+      });
     };
 
     const container = containerRef.current;
     if (container) {
-      container.addEventListener("mousemove", handleMouseMove);
+      container.addEventListener("mousemove", handleMouseMove, { passive: true });
     }
     return () => {
       if (container) {
@@ -130,16 +136,25 @@ export const InteractiveGridBackground: React.FC<InteractiveGridBackgroundProps>
     const lineColor = isDarkMode ? darkGridColor : gridColor;
     const glowColor = isDarkMode ? darkEffectColor : effectColor;
 
-    // Initialize idle positions
-    idleTargetsRef.current = Array.from({ length: idleRandomCount }, () => ({
-      x: Math.floor(Math.random() * cols),
-      y: Math.floor(Math.random() * rows),
-    }));
-    idlePositionsRef.current = idleTargetsRef.current.map((p) => ({ ...p }));
+    // Initialize idle positions if not already initialized
+    if (idleTargetsRef.current.length === 0) {
+      idleTargetsRef.current = Array.from({ length: idleRandomCount }, () => ({
+        x: Math.floor(Math.random() * cols),
+        y: Math.floor(Math.random() * rows),
+      }));
+      idlePositionsRef.current = idleTargetsRef.current.map((p) => ({ ...p }));
+    }
 
-    let animationFrameId: number;
+    let animationFrameId: number | null = null;
+    let isInView = true;
+    let isTabActive = !document.hidden;
 
     const draw = () => {
+      if (!isInView || !isTabActive) {
+        animationFrameId = null;
+        return;
+      }
+
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
       // Draw grid lines
@@ -209,11 +224,55 @@ export const InteractiveGridBackground: React.FC<InteractiveGridBackgroundProps>
       animationFrameId = requestAnimationFrame(draw);
     };
 
-    draw();
+    const startLoop = () => {
+      if (animationFrameId === null) {
+        animationFrameId = requestAnimationFrame(draw);
+      }
+    };
+
+    const stopLoop = () => {
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      isTabActive = !document.hidden;
+      if (isTabActive && isInView) {
+        startLoop();
+      } else {
+        stopLoop();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    const observer = new IntersectionObserver(([entry]) => {
+      isInView = entry.isIntersecting;
+      if (isInView && isTabActive) {
+        startLoop();
+      } else {
+        stopLoop();
+      }
+    }, { threshold: 0 });
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    if (isInView && isTabActive) {
+      startLoop();
+    }
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animationFrameId);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+      observer.disconnect();
+      stopLoop();
     };
   }, [
     gridSize,

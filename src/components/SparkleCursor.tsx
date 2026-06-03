@@ -44,8 +44,18 @@ export const SparkleCursor = ({ distance = 50, glow = true }: SparkleCursorProps
 
     let parts: any[] = [];
     let glows: any[] = [];
+    let lastCleared = false;
 
     const render = () => {
+      if (parts.length === 0 && glows.length === 0) {
+        if (!lastCleared) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          lastCleared = true;
+        }
+        return;
+      }
+      lastCleared = false;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       for (const g of glows) {
@@ -77,8 +87,15 @@ export const SparkleCursor = ({ distance = 50, glow = true }: SparkleCursorProps
 
     let distCounter = 0;
     let lastPoint: [number, number] | null = null;
+    let lastPaintTime = 0;
 
     const paint = (e: PointerEvent) => {
+      if (document.hidden) return;
+      
+      const now = performance.now();
+      if (now - lastPaintTime < 16) return;
+      lastPaintTime = now;
+
       const x = e.clientX;
       const y = e.clientY;
 
@@ -144,7 +161,7 @@ export const SparkleCursor = ({ distance = 50, glow = true }: SparkleCursorProps
       }
     };
 
-    window.addEventListener("pointermove", paint);
+    window.addEventListener("pointermove", paint, { passive: true });
     gsap.ticker.add(render);
 
     return () => {
